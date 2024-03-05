@@ -1,1 +1,1 @@
-# customer_installments_payments
+This module is designed to facilitate the management of customer installments and payments, providing a user-friendly interface with various views and access controls based on user roles. The bonus feature enhances the module by adding Pivot and Graph views for better data analysis.# customer_installments_payments
