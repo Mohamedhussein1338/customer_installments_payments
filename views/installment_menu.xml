@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Main Menu -->
+        <menuitem id="menu_installments" name="Installments" sequence="10"/>
+
+            <!-- Sub Menu -->
+        <menuitem id="menu_customer_installments" name="Customer Installments" parent="menu_installments" sequence="1"
+           action="action_customer_installments"/>
+
+    </data>
+</odoo>

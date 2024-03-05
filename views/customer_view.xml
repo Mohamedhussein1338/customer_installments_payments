@@ -1,0 +1,176 @@
+<odoo>
+
+
+    <record id="customer_tree_view" model="ir.ui.view">
+        <field name="name">customer.tree.view</field>
+        <field name="model">installment.installment</field>
+        <field name="arch" type="xml">
+            <tree string="installments" decoration-info="state == 'draft'"
+                  decoration-danger="state == 'open'"  decoration-warning="state == 'paid'"  multi_edit="1">
+
+                <field name="name"/>
+                <field name="reference"/>
+                <field name="customer"/>
+                <field name="journal"/>
+                <field name="account"/>
+                <field name="amount_paid"/>
+                <field name="amount"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-danger="state == 'open'"
+                       decoration-warning="state == 'paid'"
+                />
+            </tree>
+
+        </field>
+    </record>
+    <!-- Kanban View -->
+
+    <record id="installment_view_kanban" model="ir.ui.view">
+        <field name="name">hospital.appointment.view.kanban</field>
+        <field name="model">installment.installment</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile" sample="1">
+                <field name="name"/>
+                <field name="amount"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div class="row">
+                                <div class="col-12">
+                                    <strong>
+                                        <field name="name"/>
+                                    </strong>
+                                </div>
+                            </div>
+                            <t t-if="record.amount.value">
+                                <hr class="mt8 mb8"/>
+                                <field name="amount"/>
+                            </t>
+                            <div>
+                                <field name="state" widget="badge"
+                                       decoration-info="state == 'draft'"
+                                       decoration-danger="state == 'open'"
+                                       decoration-warning="state == 'paid'"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <!-- Search View -->
+    <record id="view_installment_installment_search" model="ir.ui.view">
+        <field name="name">installment.installment.search</field>
+        <field name="model">installment.installment</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="state"/>
+            </search>
+        </field>
+    </record>
+
+
+    <!-- Form View -->
+    <record id="view_installment_installment_form" model="ir.ui.view">
+        <field name="name">installment.installment.form</field>
+        <field name="model">installment.installment</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button string="Payments" type="object" class="oe_highlight"
+                            name="action_open_payments"/>
+                    <button string="Create Invoice" class="oe_highlight" type="object"
+                            name="action_create_invoice"/>
+                    <button string="Create Invoice2" class="oe_highlight" type="object"
+                            name="action_create_customer_invoice"/>
+                    <button string="Payment" class="oe_highlight" type="object" name="action_open_payment_wizard"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_invoices"
+                                type="object"
+                                class="oe_stat_button"
+                                groups="customer_installments_payments.group_approve_contract"
+                                icon="fa-pencil-square-o">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Invoice</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="reference"/>
+                            <field name="date"/>
+                            <field name="account_id"/>
+                            <field name="customer"/>
+                            <field name="amount_paid"/>
+                        </group>
+                        <group>
+                            <field name="journal"/>
+                            <field name="account"/>
+                            <field name="analytic_account"/>
+                            <field name="analytic_tags" widget="many2many_tags"/>
+                            <field name="amount"/>
+                            <field name="notes"/>
+                        </group>
+                    </group>
+
+                    <!-- New Tab for Payments -->
+                    <notebook>
+                        <page string="Payments" name="payments_tab">
+                            <field name="payment_ids" widget="one2many_list" options="{'editable': true}">
+                                <tree editable="bottom">
+                                    <field name="payment_date"/>
+                                    <field name="payment_amount"/>
+                                    <!-- Add more payment fields as needed -->
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="create invoice Lines">
+
+                            <field name="invoice_lines_ids">
+                                <tree>
+                                    <field name="product_id"/>
+                                    <field name="account_id"/>
+                                    <field name="quantity"/>
+                                    <field name="price_id"/>
+
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="product_id"/>
+                                        <field name="account_id"/>
+                                        <field name="quantity"/>
+                                        <field name="price_id"/>
+                                    </group>
+                                </form>
+                            </field>
+
+                        </page>
+                    </notebook>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_customer_installments" model="ir.actions.act_window">
+        <field name="name">customer installments</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">installment.installment</field>
+        <field name="view_mode">tree,form,search,kanban</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                create First customer!
+            </p>
+        </field>
+
+    </record>
+</odoo>

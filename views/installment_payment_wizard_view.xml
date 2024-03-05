@@ -1,0 +1,35 @@
+<odoo>
+    <!-- Wizard View -->
+    <record id="view_installment_payment_wizard_form" model="ir.ui.view">
+        <field name="name">installment.payment.wizard.form</field>
+        <field name="model">installment.payment.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <!-- Add fields for your wizard here -->
+                    <field name="amount"/>
+                    <field name="installment_id" string="Customer Name"/>
+                </group>
+                <footer>
+                    <button string="Confirm Payment" class="oe_highlight" type="object" name="action_confirm_payment"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+
+    <!-- Action for the Wizard -->
+    <record id="action_installment_payment_wizard" model="ir.actions.act_window">
+        <field name="name">Confirm Payment</field>
+        <field name="res_model">installment.payment.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Menu Item for the Wizard -->
+    <menuitem id="menu_installment_payment_wizard" name="Installment Payment Wizard" parent="menu_installments" sequence="2"/>
+    <menuitem id="menu_installment_payment_wizard_form" name="Confirm Payment" parent="menu_installment_payment_wizard" action="action_installment_payment_wizard"/>
+</odoo>
+

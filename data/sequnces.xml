@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="instalment_state" model="ir.sequence">
+        <field name="name">Installment</field>
+<!--        <field name="code">seq.installment</field>-->
+        <field name="prefix">IS</field>
+        <field name="padding">4</field>
+    </record>
+</odoo>
